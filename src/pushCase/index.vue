@@ -1,10 +1,13 @@
 <template>
   <div class="game__wrapper">
     <table class="game__map">
-      <tr v-for="(row) in gameMap"
+      <tr v-for="row in gameMap"
         :key="row.id">
-        <td v-for="(col) in row"
-          :key="col.id">
+        <td v-for="col in row"
+          :key="col.id"
+          @click="test"
+          @keyup="movePerson($event)"
+          tabindex=1>
           <div :class="getColor(col)"></div>
         </td>
       </tr>
@@ -21,12 +24,26 @@ export default {
     this.getColor()
     // 控制盒子的数量
     this.initBoxPosition(5)
-    this.test()
   },
   methods: {
     test() {
-      this.obj = Object.assign({}, this.gameMap)
-      console.log('4545454', this.obj)
+      // 换值第一种方法
+      // let [a, b] = this.person
+      // console.log(this.gameMap[a][b], this.gameMap[a][b + 1])
+      // let temp = this.gameMap[a][b]
+      // this.gameMap[a][b] = this.gameMap[a][b + 1]
+      // this.gameMap[a][b + 1] = temp
+      // console.log(this.gameMap[a][b], this.gameMap[a][b + 1])
+      // console.log(this.gameMap)
+      let [a, b] = this.person
+      let temp = this.gameMap[a][b]
+      console.log(temp)
+      this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b + 1])
+      console.log(this.gameMap)
+      this.$set(this.gameMap[`${a}`], `${b + 1}`, temp)
+      console.log(this.gameMap)
+      // 如何重新渲染
+      // 深入响应式原理才能动
     },
     movePerson() {
       switch (event.keyCode) {
@@ -34,15 +51,17 @@ export default {
           this.person[0]--
           break
         case 38:
-          this.person[1]++
+          this.person[1]--
           break
         case 39:
           this.person[0]++
           break
         case 40:
-          this.person[1]--
+          this.person[1]++
           break
       }
+      console.log(this.person)
+      // 加上tabindex获取到了焦点
     },
     getColor(state) {
       switch (state) {
@@ -58,6 +77,8 @@ export default {
       for (let i = 0; i < this.arr.length; i++) {
         const arr = JSON.parse(JSON.stringify(this.arr))
         this.gameMap.push(arr)
+        // this.gameMap.$set(arr, 'index', arr)
+        // console.log('11111111111', this.gameMap)
       }
     },
     ReFindPostion(x, y, state) {
@@ -80,7 +101,7 @@ export default {
         Math.floor(Math.random() * this.arr.length)
       ]
       this.ReFindPostion(this.person[0], this.person[1], PERSON_STATE)
-      this.holder.push(JSON.parse(JSON.stringify(this.person)))
+      // this.holder.push(JSON.parse(JSON.stringify(this.person)))
     },
     // 可能会重复地方
     initBoxPosition(boxNum) {
@@ -94,7 +115,7 @@ export default {
         // 判断不重复
         // 算法有点问题
         if (box !== this.holder[this.holder.length - 1]) {
-          this.holder.push(JSON.parse(JSON.stringify(box)))
+          // this.holder.push(JSON.parse(JSON.stringify(box)))
           this.boxes.push(JSON.parse(JSON.stringify(box)))
         } else {
           boxNum++
@@ -104,6 +125,7 @@ export default {
   },
   data() {
     return {
+      temp: '',
       obj: {},
       arr: [0, 0, 0, 0, 0],
       state: Number,
@@ -118,6 +140,7 @@ export default {
     person([x, y]) {
       switch ([x, y]) {
         case x++:
+          console.log('6666666')
           // 执行右移操作，简单来说右边变成2，自己变成0，想用解构赋值
           // 或者是无法执行
           // 或者是右边变成2，自己变成0，在右边变成1
@@ -125,10 +148,10 @@ export default {
         case x--:
           // 执行左移操作
           break
-        case y++:
+        case y--:
           // 执行上移操作
           break
-        case y--:
+        case y++:
           // 执行下移操作
           break
       }

@@ -5,8 +5,8 @@
         :key="row.id">
         <td v-for="col in row"
           :key="col.id"
-          @click="test"
-          @keyup="movePerson($event)"
+          @click="keep"
+          @keydown="movePerson($event)"
           tabindex=1>
           <div :class="getColor(col)"></div>
         </td>
@@ -23,44 +23,135 @@ export default {
     this.initPersonPosition()
     this.getColor()
     // 控制盒子的数量
-    this.initBoxPosition(5)
+    this.initBoxPosition(20)
   },
   methods: {
-    test() {
-      // 换值第一种方法
-      // let [a, b] = this.person
-      // console.log(this.gameMap[a][b], this.gameMap[a][b + 1])
-      // let temp = this.gameMap[a][b]
-      // this.gameMap[a][b] = this.gameMap[a][b + 1]
-      // this.gameMap[a][b + 1] = temp
-      // console.log(this.gameMap[a][b], this.gameMap[a][b + 1])
-      // console.log(this.gameMap)
+    // 有时间在抽方法。。。
+    // 是否需要，抽取上下左右四个方法为一个方法
+    // move(direction, distance) {
+    //   let [a, b] = this.person
+    //   let temp = this.gameMap[a][b]
+    //   this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b + distance])
+    //   this.$set(this.gameMap[`${a}`], `${b + distance}`, temp)
+    //   this.person = [a, b + distance]
+    // },
+    right() {
+      let [a, b] = this.person
+      let temp1 = this.gameMap[a][b]
+      let temp2 = this.gameMap[a][b + 1]
+      if (this.gameMap[a][b + 1] === 1) {
+        if (this.gameMap[a][b + 2] === 1 || b + 2 === this.arr.length) {
+          this.keep()
+        } else {
+          this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b + 2])
+          this.$set(this.gameMap[`${a}`], `${b + 1}`, temp1)
+          this.$set(this.gameMap[`${a}`], `${b + 2}`, temp2)
+          this.person = [a, b + 1]
+        }
+      } else {
+        this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b + 1])
+        this.$set(this.gameMap[`${a}`], `${b + 1}`, temp1)
+        this.person = [a, b + 1]
+      }
+    },
+    left() {
+      let [a, b] = this.person
+      let temp1 = this.gameMap[a][b]
+      let temp2 = this.gameMap[a][b - 1]
+      if (this.gameMap[a][b - 1] === 1) {
+        if (this.gameMap[a][b - 2] === 1 || b === 1) {
+          this.keep()
+        } else {
+          this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b - 2])
+          this.$set(this.gameMap[`${a}`], `${b - 1}`, temp1)
+          this.$set(this.gameMap[`${a}`], `${b - 2}`, temp2)
+          this.person = [a, b - 1]
+        }
+      } else {
+        this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b - 1])
+        this.$set(this.gameMap[`${a}`], `${b - 1}`, temp1)
+        this.person = [a, b - 1]
+      }
+    },
+    up() {
+      let [a, b] = this.person
+      let temp1 = this.gameMap[a][b]
+      let temp2 = this.gameMap[a - 1][b]
+      if (this.gameMap[a - 1][b] === 1) {
+        if (a === 1 || this.gameMap[a - 2][b] === 1) {
+          console.log('4545')
+          this.keep()
+          console.log('4545')
+        } else {
+          this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a - 2][b])
+          this.$set(this.gameMap[`${a - 1}`], `${b}`, temp1)
+          this.$set(this.gameMap[`${a - 2}`], `${b}`, temp2)
+          this.person = [a - 1, b]
+        }
+      } else {
+        this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a - 1][b])
+        this.$set(this.gameMap[`${a - 1}`], `${b}`, temp1)
+        this.person = [a - 1, b]
+      }
+    },
+    down() {
+      let [a, b] = this.person
+      let temp1 = this.gameMap[a][b]
+      let temp2 = this.gameMap[a + 1][b]
+      if (this.gameMap[a + 1][b] === 1) {
+        if (a + 2 === this.gameMap.length || this.gameMap[a + 2][b] === 1) {
+        } else {
+          this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a + 2][b])
+          this.$set(this.gameMap[`${a + 1}`], `${b}`, temp1)
+          this.$set(this.gameMap[`${a + 2}`], `${b}`, temp2)
+          this.person = [a + 1, b]
+        }
+      } else {
+        this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a + 1][b])
+        this.$set(this.gameMap[`${a + 1}`], `${b}`, temp1)
+        this.person = [a + 1, b]
+      }
+    },
+    keep() {
       let [a, b] = this.person
       let temp = this.gameMap[a][b]
-      console.log(temp)
-      this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b + 1])
-      console.log(this.gameMap)
-      this.$set(this.gameMap[`${a}`], `${b + 1}`, temp)
-      console.log(this.gameMap)
-      // 如何重新渲染
-      // 深入响应式原理才能动
+      this.$set(this.gameMap[`${a}`], `${b}`, this.gameMap[a][b])
+      this.$set(this.gameMap[`${a}`], `${b}`, temp)
+      this.person = [a, b]
     },
     movePerson() {
+      let [a, b] = this.person
+      console.log(a, b)
       switch (event.keyCode) {
         case 37:
-          this.person[0]--
+          if (b === 0) {
+            this.keep()
+          } else {
+            this.left()
+          }
           break
         case 38:
-          this.person[1]--
+          if (a === 0) {
+            this.keep()
+          } else {
+            this.up()
+          }
           break
         case 39:
-          this.person[0]++
+          if (b + 1 === this.arr.length) {
+            this.keep()
+          } else {
+            this.right()
+          }
           break
         case 40:
-          this.person[1]++
+          if (a + 1 === this.gameMap.length) {
+            this.keep()
+          } else {
+            this.down()
+          }
           break
       }
-      console.log(this.person)
       // 加上tabindex获取到了焦点
     },
     getColor(state) {
@@ -77,23 +168,10 @@ export default {
       for (let i = 0; i < this.arr.length; i++) {
         const arr = JSON.parse(JSON.stringify(this.arr))
         this.gameMap.push(arr)
-        // this.gameMap.$set(arr, 'index', arr)
-        // console.log('11111111111', this.gameMap)
       }
     },
     ReFindPostion(x, y, state) {
-      const postion = [x, y]
-      const length = this.arr.length
-      for (let i = 0; i < length; i++) {
-        if (i === postion[0]) {
-          for (let j = 0; j < length; j++) {
-            if (j === postion[1]) {
-              this.gameMap[i][j] = state
-            }
-          }
-        }
-      }
-      return state
+      this.$set(this.gameMap[`${x}`], `${y}`, state)
     },
     initPersonPosition() {
       ;[this.person[0], this.person[1]] = [
@@ -111,12 +189,17 @@ export default {
           Math.floor(Math.random() * this.arr.length),
           Math.floor(Math.random() * this.arr.length)
         ]
-        this.ReFindPostion(box[0], box[1], BOX_STATE)
-        // 判断不重复
-        // 算法有点问题
-        if (box !== this.holder[this.holder.length - 1]) {
-          // this.holder.push(JSON.parse(JSON.stringify(box)))
+        if (
+          (box[0] !== this.person[0] || box[1] !== this.person[1]) &&
+          (this.boxes[this.boxes.length - 1][0] !== box[0] ||
+            this.boxes[this.boxes.length - 1][1] !== box[1])
+        ) {
+          this.ReFindPostion(box[0], box[1], BOX_STATE)
+          // console.log(box, this.boxes[this.boxes.length - 1])
           this.boxes.push(JSON.parse(JSON.stringify(box)))
+          // 应该判断所有，这样是无法判断所有的
+          // 箱子数有bug
+          // 先处理上下左右的逻辑，回来再处理bug
         } else {
           boxNum++
         }
@@ -127,36 +210,37 @@ export default {
     return {
       temp: '',
       obj: {},
-      arr: [0, 0, 0, 0, 0],
+      arr: [0, 0, 0, 0, 0, 0, 0],
       state: Number,
-      boxes: [],
+      boxes: [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
       person: [],
       isFailly: false,
       gameMap: [],
       holder: []
     }
-  },
-  watch: {
-    person([x, y]) {
-      switch ([x, y]) {
-        case x++:
-          console.log('6666666')
-          // 执行右移操作，简单来说右边变成2，自己变成0，想用解构赋值
-          // 或者是无法执行
-          // 或者是右边变成2，自己变成0，在右边变成1
-          break
-        case x--:
-          // 执行左移操作
-          break
-        case y--:
-          // 执行上移操作
-          break
-        case y++:
-          // 执行下移操作
-          break
-      }
-    }
   }
+  // 二维数组不适合watch
+  // watch: {
+  //   person([x, y]) {
+  //     switch ([x, y]) {
+  //       case x++:
+  //         console.log('6666666')
+  //         // 执行右移操作，简单来说右边变成2，自己变成0，想用解构赋值
+  //         // 或者是无法执行
+  //         // 或者是右边变成2，自己变成0，在右边变成1
+  //         break
+  //       case x--:
+  //         // 执行左移操作
+  //         break
+  //       case y--:
+  //         // 执行上移操作
+  //         break
+  //       case y++:
+  //         // 执行下移操作
+  //         break
+  //     }
+  //   }
+  // }
 }
 </script>
 

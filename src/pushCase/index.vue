@@ -219,28 +219,6 @@ export default {
       holder: []
     }
   }
-  // 二维数组不适合watch
-  // watch: {
-  //   person([x, y]) {
-  //     switch ([x, y]) {
-  //       case x++:
-  //         console.log('6666666')
-  //         // 执行右移操作，简单来说右边变成2，自己变成0，想用解构赋值
-  //         // 或者是无法执行
-  //         // 或者是右边变成2，自己变成0，在右边变成1
-  //         break
-  //       case x--:
-  //         // 执行左移操作
-  //         break
-  //       case y--:
-  //         // 执行上移操作
-  //         break
-  //       case y++:
-  //         // 执行下移操作
-  //         break
-  //     }
-  //   }
-  // }
 }
 </script>
 

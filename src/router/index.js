@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import pushCase from '@/pushCase'
+import map from '@/map'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/pushCase',
       name: 'pushCase',
       component: pushCase
+    },
+    {
+      path: '/',
+      name: 'map',
+      component: map
     }
   ]
 })

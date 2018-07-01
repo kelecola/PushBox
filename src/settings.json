@@ -1,0 +1,101 @@
+{
+  "editor.fontSize": 12,
+  "editor.tabSize": 2,
+  "files.autoSave": "onFocusChange",
+  "window.zoomLevel": 1,
+  "auto-rename-tag.activationOnLanguage": [
+    "html",
+    "xml",
+    "php",
+    "javascript",
+    "vue"
+  ],
+  "javascript.validate.enable": false,
+  "editor.snippetSuggestions": "top",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
+  "editor.wordWrap": "wordWrapColumn",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "*.class": true,
+    "*.jar": true,
+    "**/dist": true
+  },
+  "colorize.languages": [
+    "javascript",
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "pcss",
+    "sss",
+    "stylus",
+    "xml",
+    "svg",
+    "vue",
+    "json"
+  ],
+  "colorize.files_extensions": [
+    ".diff"
+  ],
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "editor.minimap.enabled": true,
+  "search.exclude": {
+    "**/bower_components": true,
+    "**/*.class": true,
+    "**/*.java": true,
+    "**/.vscode": true
+  },
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.renderIndentGuides": false,
+  "sync.gist": "4fc0b64d3050d91d4be2aa93143a8460",
+  "sync.lastUpload": "2017-08-01T05:33:34.166Z",
+  "sync.autoDownload": true,
+  "sync.autoUpload": false,
+  "sync.lastDownload": "2017-08-03T03:30:55.389Z",
+  "sync.forceDownload": false,
+  "sync.host": "",
+  "sync.pathPrefix": "",
+  "sync.quietSync": false,
+  "editor.wordWrapColumn": 80,
+  "workbench.editor.enablePreview": true,
+  "translation.targetLanguage": "zh",
+  "translation.fromLanguage": "en",
+  "vscode-exports-autocomplete.cacheSizeLimit": "10MB",
+  "vscode-exports-autocomplete.enable": true,
+  "workbench.commandPalette.preserveInput": true,
+  "editor.autoIndent": true,
+  "sync.askGistName": false,
+  "editor.formatOnSave": false,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "[vue]": {
+    "editor.wordWrapColumn": 100
+  },
+  "javascript.format.enable": true,
+  "element-helper.version": "2.3",
+  "html.autoClosingTags": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "vetur.format.defaultFormatterOptions": {
+    "js-beautify-html": {
+      "wrap_attributes": "force"
+    }
+  },
+  "workbench.colorCustomizations": {
+    "editorIndentGuide.activeBackground": "#ff0000"
+  },
+  "editor.formatOnPaste": false
+}

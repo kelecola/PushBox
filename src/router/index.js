@@ -9,6 +9,8 @@ import sort from '@/sort'
 import inherit from '@/o2o/inherit'
 import maze from '@/module/games/maze'
 import draw from '@/module/draw'
+import latern from '@/module/latern'
+import danmu from '@/module/danmu'
 
 Vue.use(Router)
 
@@ -58,6 +60,16 @@ export default new Router({
       path: '/draw',
       name: 'draw',
       component: draw
+    },
+    {
+      path: '/latern',
+      name: 'latern',
+      component: latern
+    },
+    {
+      path: '/danmu',
+      name: 'danmu',
+      component: danmu
     }
   ]
 })
